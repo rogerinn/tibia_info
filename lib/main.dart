@@ -39,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.orange,
+      backgroundColor: Color.fromRGBO(245, 124, 0, 1),
       body: SingleChildScrollView(
         child: Column(            
           children: <Widget>[
@@ -118,19 +118,65 @@ class _HomeScreenState extends State<HomeScreen> {
                       return Center(
                         child: Text(''),
                       );
-                    } else {
-                      String vocation = snapshot.data['characters']['data']['vocation'];
-
-                      return Center(
-                        child: Text('Vocation: $vocation')
-                      );
+                    } else {                      
+                      return charInfoScreen(snapshot.data);
                     }
                 }
               },
-            )                        
+            )
           ],
         ),
       )
     );
   }
+}
+
+Widget charInfoScreen(Map<String, dynamic> data) {
+  String vocation = data['characters']['data']['vocation'];
+  String name = data['characters']['data']['name'];
+  String world = data['characters']['data']['world'];
+  String residence = data['characters']['data']['residence'];
+  String sex = data['characters']['data']['sex'];
+  int level = data['characters']['data']['level'];
+
+  return Padding (
+    padding: EdgeInsets.only(top: 15.0),
+    child: Card(  
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          ListTile(
+            leading: Image.asset('assets/images/tibia_icon.png',
+              height: 60.0,
+            ),
+            title: Text('$name', style: TextStyle(
+              fontSize: 50.0,
+              fontFamily: 'Pacifico'
+            )),
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Divider(),
+                Text('Level: $level', style: TextStyle(
+                  fontSize: 20.0
+                )),
+                Text('Vocation: $vocation', style: TextStyle(
+                  fontSize: 20.0
+                )),
+                Text('World: $world', style: TextStyle(
+                  fontSize: 20.0
+                )),
+                Text('Residence: $residence', style: TextStyle(
+                  fontSize: 20.0
+                )),
+                Text('Sex: $sex', style: TextStyle(
+                  fontSize: 20.0
+                ))
+              ],
+            ),
+          )
+        ],
+      ),
+    )
+  );
 }
